@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }else{
             startActivity(inkanAct);
-            //Cambio realizado :D
+            //:( me boorraron
             finish();
         }
         // Create the adapter that will return a fragment for each of the three
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
+
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
