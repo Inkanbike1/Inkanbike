@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private  static MessageUI msjUi;
     private static Intent inkanAct;
     /**
+     * UPDATEEEEEEEEEEEEEEEEEE
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }else{
             startActivity(inkanAct);
-            //:( me boorraron
             finish();
         }
         // Create the adapter that will return a fragment for each of the three
