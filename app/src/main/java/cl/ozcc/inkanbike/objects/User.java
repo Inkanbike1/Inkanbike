@@ -9,12 +9,15 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,17 +27,10 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
 import cl.ozcc.inkanbike.R;
 
 public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    public User(){}
-    public User(int id, String name, String email, String token, String pass){
-        User.id = id;
-        User.name = name;
-        User.email = email;
-        User.token = token;
-        User.pass = pass;
-    }
     final  static String ROUTE  = "/inkanbike/index.php/api/";
     final  static String HOST   =   "www.inkanbike.cl";
     public static URL url;
@@ -45,9 +41,20 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
     public static String pass;
     public static SharedPreferences pref;
     public static SharedPreferences.Editor editor;
-    private static Boolean isPosition = false;
     static Location mLastLocation;
     static GoogleApiClient mGoogleApiClient;
+    private static Boolean isPosition = false;
+
+    public User() {
+    }
+
+    public User(int id, String name, String email, String token, String pass) {
+        User.id = id;
+        User.name = name;
+        User.email = email;
+        User.token = token;
+        User.pass = pass;
+    }
 
     public Boolean Register(){
         try {
@@ -243,7 +250,7 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
                     String topicS = pref.getString("topic", "null");
 
                     Log.v("DEBUG_TOKEN", "TOPIC "+topic);
-                    Log.v("DEBUG_TOKEN", "TOPIC "+topicS);
+                    Log.v("DEBUG_TOKEN", "TOPICS " + topicS);
 
                     GcmPubSub pubSub = GcmPubSub.getInstance(ctx);
                     if(topicS.equals("null")){
@@ -258,6 +265,7 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
                         Log.v("DEBUG_TOKEN", "SUSCRIBE_TOKEN " + topic);
                         editor.commit();
                     }
+
                 }catch (IOException ioe){
                     Log.v("DEBUG_TOKEN", "SUSCRIBE_TOKEN IOException : "+ioe.toString());
                 }

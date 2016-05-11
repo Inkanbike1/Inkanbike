@@ -27,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private  static MessageUI msjUi;
     private static Intent inkanAct;
     /**
-     * UPDATEEEEEEEEEEEEEEEEEE
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     *  The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
@@ -47,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         msjUi = new MessageUI(MainActivity.this);
         inkanAct = new Intent(MainActivity.this, InkanActivity.class);
+
+        // Intent registerToken = new Intent(getApplicationContext(), RegistrationIntentService.class);
+        // startService(registerToken);
 
         if(!new DataHelper(getApplicationContext()).ValidLogin()){
             if(!validObj.ValidNet()){
