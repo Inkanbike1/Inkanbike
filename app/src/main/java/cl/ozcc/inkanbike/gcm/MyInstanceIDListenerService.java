@@ -18,7 +18,6 @@ public class MyInstanceIDListenerService extends InstanceIDListenerService {
     @Override
     public void onTokenRefresh() {
 
-
         pref = getApplicationContext().getSharedPreferences("broadcast", Context.MODE_PRIVATE);
         editor = pref.edit();
 

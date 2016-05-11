@@ -10,8 +10,10 @@ import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.google.android.gms.gcm.GcmListenerService;
 import com.google.android.gms.maps.model.LatLng;
+
 import cl.ozcc.inkanbike.MainActivity;
 import cl.ozcc.inkanbike.R;
 import cl.ozcc.inkanbike.objects.DataHelper;
@@ -24,9 +26,8 @@ import cl.ozcc.inkanbike.objects.Valid;
 public class MyGcmListenerService extends GcmListenerService {
 
     public static final int NOTIFICATION_ID = 1;
-    private NotificationManager mNotificationManager;
-
     private static final String TAG = "MyGcmListenerService";
+    private NotificationManager mNotificationManager;
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
@@ -40,10 +41,8 @@ public class MyGcmListenerService extends GcmListenerService {
         Log.v("DEBUG_MESSAGE","USER_MSJ : "+data.getString("message"));
         Log.v("DEBUG_MESSAGE","USER_TIME : "+data.getString("time"));
 
-
         LatLng position = new User().getPosition(getApplicationContext());
         SharedPreferences pref = getApplicationContext().getSharedPreferences("broadcast", Context.MODE_PRIVATE);
-
 
         if (from.startsWith("/topics/inkan"+pref.getString("topic","null"))) {
             if(Integer.parseInt(data.getString("user")) != new DataHelper(getApplication()).getUserID()){
