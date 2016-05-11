@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "112040571933",
+    "project_id": "euphoric-axiom-469"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112040571933:android:2b3699318d788b2d",
+        "android_client_info": {
+          "package_name": "cl.ozcc.inkanbike"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEWzt5hUpcRrxinARjac7RmTtdJEYU_88"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
