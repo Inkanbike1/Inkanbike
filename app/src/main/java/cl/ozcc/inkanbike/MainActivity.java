@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private  static MessageUI msjUi;
     private static Intent inkanAct;
 
-    //HOLA ANTONIO
+    //poiuytrew
 
 
     /**
