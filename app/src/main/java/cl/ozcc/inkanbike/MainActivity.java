@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private  static MessageUI msjUi;
     private static Intent inkanAct;
 
+    //poiuytrew
+
+
     /**
      *  The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
