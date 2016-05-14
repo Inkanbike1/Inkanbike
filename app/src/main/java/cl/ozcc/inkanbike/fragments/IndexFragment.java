@@ -1,7 +1,6 @@
 package cl.ozcc.inkanbike.fragments;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -34,9 +33,7 @@ import java.util.ArrayList;
 import cl.ozcc.inkanbike.R;
 import cl.ozcc.inkanbike.objects.CItemSos;
 import cl.ozcc.inkanbike.objects.CListSos;
-import cl.ozcc.inkanbike.objects.DataHelper;
 import cl.ozcc.inkanbike.objects.Garage;
-import cl.ozcc.inkanbike.objects.MessageUI;
 import cl.ozcc.inkanbike.objects.User;
 
 /**
@@ -44,7 +41,7 @@ import cl.ozcc.inkanbike.objects.User;
  */
 public class IndexFragment extends Fragment implements OnMapReadyCallback,
                                                         GoogleApiClient.ConnectionCallbacks,
-                                                        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener {
     GoogleApiClient mGoogleApiClient;
     SupportMapFragment SupportMap;
     GoogleMap Gmap;
@@ -65,8 +62,27 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
         Gmap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-
+                Toast.makeText(getContext(), "MARKER_CLICK", Toast.LENGTH_SHORT).show();
                 return true;
+            }
+        });
+        Gmap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                LatLng latLng = new LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude);
+                ArrayList<Garage> garages = User.getGarageFromServer(latLng, getContext());
+                try {
+                    for (Garage garage : garages) {
+                        Gmap.addMarker(new MarkerOptions()
+                                        .position(new LatLng(garage.getLat(), garage.getLng()))
+                                        .title(garage.getName())
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.icontaller))
+                        );
+                    }
+                } catch (Exception e) {
+                    Log.v("DEBUG_GARAGE", "EXCEPTION " + e.toString());
+
+                }
             }
         });
 
@@ -126,15 +142,6 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
         try {
             Gmap = googleMap;
             googleMap.setMyLocationEnabled(true);
-            googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-                @Override
-                public void onCameraChange(CameraPosition cameraPosition) {
-
-                    String[] ltln = new String[2];
-                    ltln[0] = "" + cameraPosition.target.latitude;
-                    ltln[1] = "" + cameraPosition.target.longitude;
-                }
-            });
         }catch (SecurityException se){
 
         }
