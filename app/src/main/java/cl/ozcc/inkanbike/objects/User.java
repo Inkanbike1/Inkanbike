@@ -16,6 +16,7 @@ import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +56,63 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
         User.email = email;
         User.token = token;
         User.pass = pass;
+    }
+
+    public static ArrayList<Garage> getGarageFromServer(final LatLng latLng, Context ctx) {
+        final int ID = new DataHelper(ctx).getUserID();
+
+        final ArrayList<Garage> garages = new ArrayList<Garage>();
+        try {
+            return new AsyncTask<Void, Void, ArrayList<Garage>>() {
+                @Override
+                protected ArrayList<Garage> doInBackground(Void... params) {
+                    try {
+                        url = new URL("http", HOST, ROUTE + "garage/workshops/lat/" + latLng.latitude +
+                                "/lon/" + latLng.longitude + "/user/" + ID);
+
+                        Log.v("DEBUG_GARAGE", "URL GET GARAGE :" + url.toString());
+
+                        HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+                        if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                            InputStream is = urlConn.getInputStream();
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+                            StringBuilder sb = new StringBuilder();
+                            String line = null;
+                            while ((line = reader.readLine()) != null) {
+                                sb.append(line);
+                            }
+                            is.close();
+                            JSONArray respArray = new JSONArray(sb.toString());
+                            for (int i = 0; i < respArray.length(); i++) {
+                                JSONObject object = respArray.getJSONObject(i);
+                                Log.v("DEBUG_GARAGE", "ID :" + object.getInt("ibGara_id"));
+                                Log.v("DEBUG_GARAGE", "NAME :" + object.getString("ibGara_name"));
+                                Log.v("DEBUG_GARAGE", "DIR :" + object.getString("ibGara_address"));
+                                Log.v("DEBUG_GARAGE", "LAT :" + object.getString("ibGara_lat"));
+                                Log.v("DEBUG_GARAGE", "LON :" + object.getString("ibGara_lon"));
+                                garages.add(new Garage(
+                                        object.getInt("ibGara_id"),
+                                        object.getString("ibGara_name"),
+                                        object.getString("ibGara_address"),
+                                        object.getString("ibGara_lat"),
+                                        object.getString("ibGara_lon")));
+                            }
+                            return garages;
+                            //Implements JSON ARRAY Garage
+
+                        } else {
+                            return garages;
+                        }
+                    } catch (Exception e) {
+                        Log.v("DEBUG_GARAGE", "EXCEPTION :" + e.toString());
+                        return garages;
+                    }
+                }
+            }.execute().get();
+        } catch (Exception e) {
+            Log.v("DEBUG_GARAGE", "EXCEPTION :" + e.toString());
+            return garages;
+        }
     }
 
     public Boolean Register(){
@@ -88,6 +147,7 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
             return false;
         }
     }//Fin Registered
+
     public LatLng getPosition(Context ctx){
         try{
             mGoogleApiClient = new GoogleApiClient.Builder(ctx)
@@ -102,6 +162,7 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
             return new LatLng(0.0,0.0);
         }
     }
+
     public User findUserFromServer(final int id){
         try {
             return new AsyncTask<Void, Void, User>() {
@@ -187,13 +248,10 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
                     LatLng position = User.this.getPosition(ctx);
                     pref = ctx.getSharedPreferences("broadcast", Context.MODE_PRIVATE);
                     try {
-
                         Calendar c = Calendar.getInstance();
-
                             int hour = c.get(Calendar.HOUR);
                             int min = c.get(Calendar.MINUTE);
                             String time = ""+hour+"_"+min;
-
                         url = new URL("http", HOST, ROUTE + "user/sendAlert/" +
                                 "user/" + new DataHelper(ctx).getUserID() + "/" +
                                 "lat/" + position.latitude + "/" +
@@ -201,10 +259,7 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
                                 "type/" + params[0] + "/" +
                                 "topic/" + pref.getString("topic", "null")+ "/" +
                                 "time/"+time);
-
                         Log.v("DEBUG_MESSAGE","SENDING SOS : "+url.toString());
-
-
                         HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
                         if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
