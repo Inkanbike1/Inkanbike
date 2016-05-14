@@ -85,7 +85,6 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
                 }
             }
         });
-
         ArrayList<CItemSos> adapter = new ArrayList<>();
         int imgBike = R.drawable.ic_bike_black_36dp;
         adapter.add(new CItemSos(ctx.getString(R.string.SOS_FLAT_TIRE),imgBike ));
