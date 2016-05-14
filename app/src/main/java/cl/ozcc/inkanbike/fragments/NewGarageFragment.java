@@ -68,7 +68,7 @@ public class NewGarageFragment extends Fragment implements OnMapReadyCallback,
                             String text = "Lat :" + ltln[0] + " Lon :" + ltln[1];
                             Toast.makeText(getContext(), "¡ERROR!"+text, Toast.LENGTH_SHORT).show();
                         } else {
-                            Garage grg = new Garage(nom, dir, ltln[0], ltln[1]);
+                            Garage grg = new Garage(0, nom, dir, ltln[0], ltln[1]);
                             grg.SaveGarage();
                                if(new DataHelper(ctx).SaveGarage(grg)){
                                 Toast.makeText(ctx,ctx.getString(R.string.GARAGE_OK),Toast.LENGTH_LONG).show();
