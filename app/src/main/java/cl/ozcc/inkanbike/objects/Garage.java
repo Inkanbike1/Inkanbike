@@ -14,18 +14,19 @@ import java.net.URL;
  * Created by root on 07-09-15.
  */
 public class Garage {
+    final static String ROUTE = "/inkanbike/index.php/api/";
+    final static String HOST = "www.inkanbike.cl";
+    URL url;
     private int id;
     private String Name;
     private String Dir;
     private Double Lat;
     private Double Lng;
-    URL url;
-    final static String ROUTE  = "/inkanbike/index.php/api/";
-    final static String HOST   =   "www.inkanbike.cl";
 
-    public Garage(String n,String d,String lt,String ln){
-        this.Name   = n;
-        this.Dir    = d;
+    public Garage(int id, String name, String dir, String lt, String ln) {
+        this.id = id;
+        this.Name = name;
+        this.Dir = dir;
         try{
             this.Lat = Double.parseDouble(lt);
             this.Lng = Double.parseDouble(ln);
