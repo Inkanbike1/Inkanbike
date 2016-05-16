@@ -76,7 +76,7 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
                         Gmap.addMarker(new MarkerOptions()
                                         .position(new LatLng(garage.getLat(), garage.getLng()))
                                         .title(garage.getName())
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.icontaller))
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_garage_pick_black_48dp))
                         );
                     }
                 } catch (Exception e) {
