@@ -1,6 +1,10 @@
 package cl.ozcc.inkanbike.objects;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -24,6 +28,8 @@ public class Valid{
     URL url;
     final static String ROUTE  = "/inkanbike/index.php/api/";
     final static String HOST   =   "www.inkanbike.cl";
+    Boolean isEnableGps, isEnableNet;
+    LocationManager LocMan;
     public Boolean ValidNet(){
         try {
             return new AsyncTask<Void, Void, Boolean>() {
@@ -174,5 +180,35 @@ public class Valid{
 
 
         return mts >= round(distance);
+    }
+
+    public boolean ValidGPS(Context ctx){
+        LocMan = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+        isEnableGps = LocMan.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        isEnableNet = LocMan.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        if (!isEnableGps){
+            msg(ctx);
+        }
+
+        return false;
+    }
+
+    public void msg(Context ctx){
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(ctx);
+        dialogo.setTitle("Importante");
+        dialogo.setMessage("¿Activar Gps?");
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+
+            }
+        });
+        dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+
+            }
+        });
+        dialogo.show();
     }
 }
