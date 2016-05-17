@@ -332,8 +332,8 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
         string = string.replace("á","a");
         string = string.replace("é","e");
         string = string.replace("í","i");
-        string = string.replace("ó","o");
-        string = string.replace("ú","u");
+        string = string.replace("ó", "o");
+        string = string.replace("ú", "u");
         string = string.replace(" ","");
         return string;
     }
@@ -353,5 +353,10 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult){
         isPosition = true;
+    }
+
+
+    public void HOLANTONIO() {
+        
     }
 }
