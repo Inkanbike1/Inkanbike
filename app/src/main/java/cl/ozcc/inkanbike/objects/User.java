@@ -14,7 +14,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,7 +52,6 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
 
     public User() {
     }
-
     public User(int id, String name, String email, String token, String pass) {
         User.id = id;
         User.name = name;
@@ -58,12 +60,12 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
         User.pass = pass;
     }
 
-    public static ArrayList<Garage> getGarageFromServer(final LatLng latLng, Context ctx) {
+    public static void getGarageFromServer(final LatLng latLng, Context ctx, final GoogleMap Gmap) {
         final int ID = new DataHelper(ctx).getUserID();
 
         final ArrayList<Garage> garages = new ArrayList<Garage>();
         try {
-            return new AsyncTask<Void, Void, ArrayList<Garage>>() {
+            new AsyncTask<Void, Void, ArrayList<Garage>>() {
                 @Override
                 protected ArrayList<Garage> doInBackground(Void... params) {
                     try {
@@ -108,13 +110,28 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
                         return garages;
                     }
                 }
-            }.execute().get();
+
+                @Override
+                protected void onPostExecute(ArrayList<Garage> garages) {
+                    try {
+                        for (Garage garage : garages) {
+                            Gmap.addMarker(new MarkerOptions()
+                                            .position(new LatLng(garage.getLat(), garage.getLng()))
+                                            .title(garage.getName())
+                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_garage_pick_black_48dp))
+                            );
+                        }
+                    } catch (Exception e) {
+                        Log.v("DEBUG_GARAGE", "EXCEPTION " + e.toString());
+
+                    }
+
+                }
+            }.execute();
         } catch (Exception e) {
             Log.v("DEBUG_GARAGE", "EXCEPTION :" + e.toString());
-            return garages;
         }
     }
-
     public Boolean Register(){
         try {
             return new AsyncTask<Void, Void, Boolean>() {
@@ -147,7 +164,6 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
             return false;
         }
     }//Fin Registered
-
     public LatLng getPosition(Context ctx){
         try{
             mGoogleApiClient = new GoogleApiClient.Builder(ctx)
@@ -162,7 +178,6 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
             return new LatLng(0.0,0.0);
         }
     }
-
     public User findUserFromServer(final int id){
         try {
             return new AsyncTask<Void, Void, User>() {
@@ -353,9 +368,5 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult){
         isPosition = true;
-    }
-
-    public Boolean HOLI() {
-        return false;
     }
 }
