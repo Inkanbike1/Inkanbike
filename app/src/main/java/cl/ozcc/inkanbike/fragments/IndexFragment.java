@@ -22,18 +22,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
 import cl.ozcc.inkanbike.R;
 import cl.ozcc.inkanbike.objects.CItemSos;
 import cl.ozcc.inkanbike.objects.CListSos;
-import cl.ozcc.inkanbike.objects.Garage;
 import cl.ozcc.inkanbike.objects.User;
 
 /**
@@ -70,22 +67,9 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
                 LatLng latLng = new LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude);
-                ArrayList<Garage> garages = User.getGarageFromServer(latLng, getContext());
-                try {
-                    for (Garage garage : garages) {
-                        Gmap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(garage.getLat(), garage.getLng()))
-                                        .title(garage.getName())
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_garage_pick_black_48dp))
-                        );
-                    }
-                } catch (Exception e) {
-                    Log.v("DEBUG_GARAGE", "EXCEPTION " + e.toString());
-
-                }
+                new User().getGarageFromServer(latLng, getContext(), Gmap);
             }
         });
-
         ArrayList<CItemSos> adapter = new ArrayList<>();
         int imgBike = R.drawable.ic_bike_black_36dp;
         adapter.add(new CItemSos(ctx.getString(R.string.SOS_FLAT_TIRE),imgBike ));
