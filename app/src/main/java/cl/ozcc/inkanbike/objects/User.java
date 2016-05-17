@@ -369,6 +369,4 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
     public void onConnectionFailed(ConnectionResult connectionResult){
         isPosition = true;
     }
-
-    //asdasdasdasdasd
 }
