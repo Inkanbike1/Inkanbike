@@ -355,7 +355,7 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
         isPosition = true;
     }
 
-    public void HOLANTONIO() {
-
+    public Boolean HOLI() {
+        return false;
     }
 }
