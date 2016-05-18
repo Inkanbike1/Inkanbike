@@ -178,6 +178,15 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
             return new LatLng(0.0,0.0);
         }
     }
+
+    public LatLng getPosition() {
+        try {
+            return new LatLng(0.0, 0.0);
+        } catch (Exception e) {
+            Log.v("DEBUG_POSITION", "ERROR GET POSITION  : " + e.toString());
+            return new LatLng(0.0, 0.0);
+        }
+    }
     public User findUserFromServer(final int id){
         try {
             return new AsyncTask<Void, Void, User>() {
