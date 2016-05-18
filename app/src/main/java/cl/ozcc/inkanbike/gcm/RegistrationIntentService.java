@@ -12,12 +12,14 @@ import com.google.android.gms.iid.InstanceID;
 
 import cl.ozcc.inkanbike.objects.DataHelper;
 import cl.ozcc.inkanbike.objects.User;
+import cl.ozcc.inkanbike.objects.Valid;
 
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
     public static SharedPreferences pref;
     public static SharedPreferences.Editor editor;
+    private final static Valid validObj = new Valid();
 
     public RegistrationIntentService() {
         super(TAG);
@@ -39,7 +41,9 @@ public class RegistrationIntentService extends IntentService {
             editor.commit();
 
             new DataHelper(getApplicationContext()).updateToken(token);
-            new User().subscribeTopics(getApplicationContext(), token);
+            if (validObj.ValidGPS(getBaseContext())) {
+                new User().subscribeTopics(getApplicationContext(), token);
+            }
 
         } catch (Exception e) {}
         Intent registrationComplete = new Intent("registrationComplete");
