@@ -32,6 +32,7 @@ import cl.ozcc.inkanbike.R;
 import cl.ozcc.inkanbike.objects.CItemSos;
 import cl.ozcc.inkanbike.objects.CListSos;
 import cl.ozcc.inkanbike.objects.User;
+import cl.ozcc.inkanbike.objects.Valid;
 
 /**
  * Created by root on 14-08-15.
@@ -44,6 +45,8 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
     GoogleMap Gmap;
     Context ctx;
     SharedPreferences prefs;
+    private final static Valid validObj = new Valid();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.content_inkan, container, false);
@@ -66,8 +69,11 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
         Gmap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
+            if(validObj.ValidGPS(ctx)){
                 LatLng latLng = new LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude);
                 new User().getGarageFromServer(latLng, getContext(), Gmap);
+            }
+
             }
         });
         ArrayList<CItemSos> adapter = new ArrayList<>();
@@ -135,7 +141,9 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
         try {
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             if (mLastLocation != null) {
-                centerMap(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                if(validObj.ValidGPS(ctx)){
+                    centerMap(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                }
             }
         }catch (SecurityException se){
 
