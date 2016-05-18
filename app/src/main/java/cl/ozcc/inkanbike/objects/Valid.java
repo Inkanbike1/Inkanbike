@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONObject;
@@ -191,21 +192,24 @@ public class Valid{
             msg(ctx);
         }
 
-        return false;
+        //re-check
+        if (!isEnableGps){
+            return false;
+        }else{
+            return true;
+        }
     }
 
-    public void msg(Context ctx){
-        AlertDialog.Builder dialogo = new AlertDialog.Builder(ctx);
-        dialogo.setTitle("Importante");
-        dialogo.setMessage("¿Activar Gps?");
-        dialogo.setCancelable(false);
-        dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
+    public void msg(final Context ctx){
+        AlertDialog.Builder dialogo = new MessageUI(ctx).GetAlertDialog("Importante","¿Activacion de GPS?",false);
 
+        dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo, int id) {
+                ctx.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             }
         });
         dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
+            public void onClick(DialogInterface dialogo, int id) {
 
             }
         });
