@@ -87,11 +87,6 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
                             JSONArray respArray = new JSONArray(sb.toString());
                             for (int i = 0; i < respArray.length(); i++) {
                                 JSONObject object = respArray.getJSONObject(i);
-                                Log.v("DEBUG_GARAGE", "ID :" + object.getInt("ibGara_id"));
-                                Log.v("DEBUG_GARAGE", "NAME :" + object.getString("ibGara_name"));
-                                Log.v("DEBUG_GARAGE", "DIR :" + object.getString("ibGara_address"));
-                                Log.v("DEBUG_GARAGE", "LAT :" + object.getString("ibGara_lat"));
-                                Log.v("DEBUG_GARAGE", "LON :" + object.getString("ibGara_lon"));
                                 garages.add(new Garage(
                                         object.getInt("ibGara_id"),
                                         object.getString("ibGara_name"),
