@@ -2,18 +2,25 @@ package cl.ozcc.inkanbike.objects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 /**
  * Created by root on 23-03-16.
  */
 public class Bike implements Parcelable{
+    public static final Creator CREATOR = new Creator() {
+        public Bike createFromParcel(Parcel in) {
+            return new Bike(in);
+        }
+
+        public Bike[] newArray(int size) {
+            return new Bike[size];
+        }
+    };
     private int id;
     private String brand;
     private String model;
     private String serial;
     private String other;
     private String photo;
-
     public Bike(int id, String brand, String other, String serial, String model) {
         this.id = id;
         this.brand = brand;
@@ -38,10 +45,12 @@ public class Bike implements Parcelable{
         this.serial    = data[2];
         this.other   = data[3];
     }
+
     @Override
     public int describeContents(){
         return 0;
     }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[] {
@@ -50,14 +59,7 @@ public class Bike implements Parcelable{
                 this.serial,
                 this.other,});
     }
-    public static final Creator CREATOR = new Creator() {
-        public Bike createFromParcel(Parcel in) {
-            return new Bike(in);
-        }
-        public Bike[] newArray(int size) {
-            return new Bike[size];
-        }
-    };
+
     public int getId() {
         return id;
     }
