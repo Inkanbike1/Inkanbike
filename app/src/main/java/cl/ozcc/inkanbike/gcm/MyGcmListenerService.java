@@ -9,14 +9,14 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.google.android.gms.maps.model.LatLng;
 
-import cl.ozcc.inkanbike.MainActivity;
 import cl.ozcc.inkanbike.R;
+import cl.ozcc.inkanbike.SosActivity;
 import cl.ozcc.inkanbike.objects.DataHelper;
+import cl.ozcc.inkanbike.objects.Sos;
 import cl.ozcc.inkanbike.objects.User;
 import cl.ozcc.inkanbike.objects.Valid;
 
@@ -27,6 +27,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
     public static final int NOTIFICATION_ID = 1;
     private static final String TAG = "MyGcmListenerService";
+    Sos sos = null;
     private NotificationManager mNotificationManager;
 
     @Override
@@ -34,34 +35,35 @@ public class MyGcmListenerService extends GcmListenerService {
 
         String message = data.getString("message");
 
-        Log.v("DEBUG_MESSAGE","USER_ID : "+data.getString("user"));
-        Log.v("DEBUG_MESSAGE","SOS_LAT : "+data.getString("lat"));
-        Log.v("DEBUG_MESSAGE","SOS_LON : "+data.getString("lng"));
-        Log.v("DEBUG_MESSAGE","USER_TYPE : "+data.getString("type"));
-        Log.v("DEBUG_MESSAGE","USER_MSJ : "+data.getString("message"));
-        Log.v("DEBUG_MESSAGE","USER_TIME : "+data.getString("time"));
-
         LatLng position = new User().getPosition(getApplicationContext());
         SharedPreferences pref = getApplicationContext().getSharedPreferences("broadcast", Context.MODE_PRIVATE);
 
         if (from.startsWith("/topics/inkan"+pref.getString("topic","null"))) {
             if(Integer.parseInt(data.getString("user")) != new DataHelper(getApplication()).getUserID()){
                 if(new Valid().isIntoRatio(position, 200, getApplicationContext())){
+
+                    sos = new Sos(data.getString("alert_id"),
+                            data.getString("user"),
+                            data.getString("lat"),
+                            data.getString("lng"),
+                            data.getString("type"),
+                            data.getString("message"),
+                            data.getString("time"),
+                            "200");
+
                         sendNotification(message);
                 }
             }
         } else {
-
         }
-
     }
     private void sendNotification(String message) {
 
         mNotificationManager = (NotificationManager)
                 this.getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+        Intent sosIntent = new Intent(this, SosActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 1, sosIntent, 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(getApplicationContext())
@@ -80,6 +82,5 @@ public class MyGcmListenerService extends GcmListenerService {
         final Vibrator v = (Vibrator) getApplicationContext().getSystemService(getApplicationContext().VIBRATOR_SERVICE);
         long[] pattern = {0, 800, 800, 800, 800, 800};
         v.vibrate(pattern, -1);
-
     }
 }
