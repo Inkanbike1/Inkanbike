@@ -79,7 +79,9 @@
             android:exported="false">
         </service>
 
-        <activity android:name=".SosActivity"></activity>
+        <activity
+            android:name=".SosActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
