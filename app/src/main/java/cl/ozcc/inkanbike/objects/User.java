@@ -373,4 +373,28 @@ public class User implements GoogleApiClient.ConnectionCallbacks, GoogleApiClien
     public void onConnectionFailed(ConnectionResult connectionResult){
         isPosition = true;
     }
+
+    public void responseSos(final int alertId) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    url = new URL("http", HOST, ROUTE + "user/respsos/alert_id/" + alertId);
+                    HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+                    if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        InputStream is = urlConn.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+                        StringBuilder sb = new StringBuilder();
+                        String line = null;
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                        is.close();
+                    }
+                } catch (Exception e) {
+                }
+                return null;
+            }
+        }.execute();
+    }
 }

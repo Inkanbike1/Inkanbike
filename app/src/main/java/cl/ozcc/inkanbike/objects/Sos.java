@@ -22,7 +22,7 @@ public class Sos implements Parcelable {
     static int Distance;
     static Double lat;
     static Double lon;
-    static String Type;
+    static int Type;
     static String Message;
     static String Hours;
 
@@ -35,7 +35,7 @@ public class Sos implements Parcelable {
         userId = Integer.parseInt(uId);
         lat = Double.parseDouble(latitude);
         lon = Double.parseDouble(longitude);
-        Type = type;
+        Type = Integer.parseInt(type);
         Message = msj;
         Hours = hours;
     }
@@ -47,7 +47,7 @@ public class Sos implements Parcelable {
         userId = Integer.parseInt(data[1]);
         lat = Double.parseDouble(data[2]);
         lon = Double.parseDouble(data[3]);
-        Type = data[4];
+        Type = Integer.parseInt(data[4]);
         Message = data[5];
         Hours = data[6];
     }
@@ -64,7 +64,7 @@ public class Sos implements Parcelable {
                 "" + userId,
                 "" + lat,
                 "" + lon,
-                Type,
+                "" + Type,
                 Message,
                 Hours});
     }
@@ -101,11 +101,11 @@ public class Sos implements Parcelable {
         Sos.lon = lon;
     }
 
-    public String getType() {
+    public int getType() {
         return Type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         Type = type;
     }
 

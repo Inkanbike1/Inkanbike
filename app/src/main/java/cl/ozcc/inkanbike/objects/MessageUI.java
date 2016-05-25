@@ -1,10 +1,7 @@
 package cl.ozcc.inkanbike.objects;
 
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -34,7 +31,10 @@ public class MessageUI {
     }
 
     public AlertDialog.Builder GetAlertDialog(String title, String message, Boolean Cancelable){
-        AlertDialog.Builder alert = new AlertDialog.Builder(ctx).setTitle(title).setMessage(message).setCancelable(Cancelable);
+        AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
+        alert.setTitle(title);
+        alert.setMessage(message);
+        alert.setCancelable(Cancelable);
         alert.create();
         return  alert;
     }
