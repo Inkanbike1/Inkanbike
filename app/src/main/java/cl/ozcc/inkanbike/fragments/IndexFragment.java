@@ -40,12 +40,12 @@ import cl.ozcc.inkanbike.objects.Valid;
 public class IndexFragment extends Fragment implements OnMapReadyCallback,
                                                         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
+    private final static Valid validObj = new Valid();
     GoogleApiClient mGoogleApiClient;
     SupportMapFragment SupportMap;
     GoogleMap Gmap;
     Context ctx;
     SharedPreferences prefs;
-    private final static Valid validObj = new Valid();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
