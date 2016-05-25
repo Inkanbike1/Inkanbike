@@ -20,6 +20,14 @@
     <string name="add_garage">Añadir Taller</string>
     <string name="NO_NET">Inkanbike necesita de una conexión a internet</string>
     <string name="SEND_SOS_USERS">Enviando SOS a usuarios cercanos</string>
+    <string-array name="SOS_ARRAY">
+        <item>Pinchazo</item>
+        <item>Rueda</item>
+        <item>Frenos</item>
+        <item>Cadena</item>
+        <item>Otro...</item>
+        <item>Robo!!!</item>
+    </string-array>
     <string name="SOS_FLAT_TIRE">Pinchazo</string>
     <string name="SOS_TIRE">Rueda</string>
     <string name="SOS_BRAKE">Frenos</string>
@@ -39,4 +47,5 @@
     <string name="PASS_NOT_EQUALS">Las Contraseñas no coinciden</string>
     <string name="EMAIL_REGISTERED">Ya tienes una cuenta con el correo ingresado</string>
     <string name="GARAGE_OK">Taller añadido correctamente</string>
+    <string name="SOS_RESP_OK">Estamos avisando que vas en camino</string>
 </resources>
