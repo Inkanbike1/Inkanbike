@@ -30,21 +30,9 @@ public class DataHelper extends SQLiteOpenHelper {
         String queryBike ="CREATE TABLE IF NOT EXISTS bikes(bike_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " brand TEXT, model TEXT, serial TEXT,other TEXT, photo TEXT);";
 
-        String querySos = "CREATE TABLE IF NOT EXISTS sos(sos_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " string TEXT);";
-
-        String queryAddSos = "INSERT INTO sos VALUES('SOS_FLAT_TIRE'," +
-                "'SOS_TIRE'," +
-                "'SOS_BRAKE'," +
-                "'SOS_CHAIN'," +
-                "'SOS_OTHER'," +
-                "'SOS_THIEFT');";
-
         db.execSQL(queryCreate);
         db.execSQL(queryTalleres);
         db.execSQL(queryBike);
-        db.execSQL(querySos);
-        db.execSQL(queryAddSos);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -243,17 +231,6 @@ public class DataHelper extends SQLiteOpenHelper {
             return true;
         }catch(Exception e){
             return false;
-        }
-    }
-
-    public String getSosString(int id) {
-        String[] columnas = {"string"};
-        Cursor c = this.getReadableDatabase().query("bikes", columnas, "sos_id=?", new String[]{id + ""}, null, null, null);
-        try {
-            c.moveToFirst();
-            return c.getString(c.getColumnIndex("string"));
-        } catch (Exception e) {
-            return "";
         }
     }
 }
