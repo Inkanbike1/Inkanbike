@@ -41,11 +41,12 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
                                                         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
     private final static Valid validObj = new Valid();
+    public static SharedPreferences prefs;
+    public static SharedPreferences.Editor editor;
     GoogleApiClient mGoogleApiClient;
     SupportMapFragment SupportMap;
     GoogleMap Gmap;
     Context ctx;
-    SharedPreferences prefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -113,10 +114,11 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
 
             }
         });
-        SharedPreferences prefs = ctx.getSharedPreferences("broadcast", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+        prefs = ctx.getSharedPreferences("broadcast", Context.MODE_PRIVATE);
+        editor = prefs.edit();
         editor.putString("fragment", "IndexFragment");
         editor.commit();
+
         return view;
     }
     @Override
@@ -143,6 +145,10 @@ public class IndexFragment extends Fragment implements OnMapReadyCallback,
             if (mLastLocation != null) {
                 if(validObj.ValidGPS(ctx)){
                     centerMap(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+
+                    editor.putString("lastLat", String.valueOf(mLastLocation.getLatitude()));
+                    editor.putString("lastLng", String.valueOf(mLastLocation.getLongitude()));
+                    editor.commit();
                 }
             }
         }catch (SecurityException se){
