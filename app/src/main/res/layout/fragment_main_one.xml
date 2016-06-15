@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity$PlaceholderFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:orientation="vertical">
+    tools:context=".MainActivity$PlaceholderFragment">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="192dp"
-            android:src="@drawable/indexlogo"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:src="@drawable/logo_login" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -24,35 +24,35 @@
             android:hint="@string/EMAIL"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
             <EditText
+                android:id="@+id/emailIng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions"
-                android:id="@+id/emailIng"/>
+                android:inputType="textNoSuggestions" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
             <EditText
+                android:id="@+id/passIng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:id="@+id/passIng"
-                android:hint="@string/PASS"/>
+                android:hint="@string/PASS"
+                android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
         <Button
+            android:id="@+id/btnIngresar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/LOGIN"
-            android:id="@+id/btnIngresar"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:text="@string/LOGIN" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_gravity="center_horizontal"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:onClick="ChangeRight"
         android:text="@string/REGISTER"
-        android:onClick="ChangeRight"/>
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

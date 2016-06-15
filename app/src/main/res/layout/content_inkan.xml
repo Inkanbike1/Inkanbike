@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,19 +9,18 @@
 
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/lyt5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/border"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/lyt5">
+        android:orientation="horizontal">
 
 
         <fragment
             android:id="@+id/maps"
+            class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.google.android.gms.maps.SupportMapFragment"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -29,10 +28,10 @@
         android:id="@+id/sendSosFloatButton"
         android:layout_width="65dp"
         android:layout_height="65dp"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:src="@drawable/ic_bullhorn_black_36dp"
         app:backgroundTint="@color/orange"
-        android:layout_gravity="bottom"
         />
 </android.support.design.widget.CoordinatorLayout>
